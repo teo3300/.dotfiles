@@ -1,0 +1,6 @@
+alacritty		/home/rogora/.config/alacritty
+firefox			/home/rogora/.mozilla/firefox/*.default-release/chrome
+home			/home/rogora
+local-bin		/home/rogora/.local/bin
+sway			/home/rogora/.config/sway
+p-hooks			/etc/pacman.d/hooks

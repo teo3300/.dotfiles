@@ -1,0 +1,10 @@
+#!/bin/bash
+
+max_volume=200
+step=10
+
+curr_volume=$(amixer get Master | awk '/Mono:+/ {getline; print $5}' | tr -d '[%]')
+
+if [ $curr_volume -le $(expr $max_volume - $step) ]; then
+    pactl set-sink-volume @DEFAULT_SINK@ +"$step"%
+fi
