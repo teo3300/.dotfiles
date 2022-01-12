@@ -1,6 +1,7 @@
 config			/home/rogora/.config
 alacritty		/home/rogora/.config/alacritty
 firefox			/home/rogora/.mozilla/firefox/*.default-release/chrome
+vscode			/home/rogora/.config/Code\ -\ OSS/User
 home			/home/rogora
 local-bin		/home/rogora/.local/bin
 sway			/home/rogora/.config/sway
