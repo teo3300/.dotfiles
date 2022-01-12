@@ -15,6 +15,7 @@ link_to () {
 	for file in $src/*; do
 		target="$src/$(basename $file)"
 		link=$(ls "$dst/$(basename $file)")
+		ln -P "$target" "$link"
 	done
 }
 

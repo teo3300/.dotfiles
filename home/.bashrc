@@ -14,11 +14,12 @@ if [[ -z $DISPLAY && "$(tty)" == "/dev/tty1" && $XDG_SESSION_TYPE == tty ]]; the
 
 fi
 
-export EDITOR=vim
-export PAGER=less
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+# set default editor and pager
+export EDITOR=vim
+export PAGER=less
 
 alias ls='ls --color=auto'
 
