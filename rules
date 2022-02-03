@@ -6,3 +6,4 @@ home			/home/rogora
 local-bin		/home/rogora/.local/bin
 sway			/home/rogora/.config/sway
 p-hooks			/etc/pacman.d/hooks
+foot			/home/rogora/.config/foot
