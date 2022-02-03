@@ -15,7 +15,7 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator (was sway)
-set $term alacritty
+set $term foot
 set $fm urxvt -e ranger
 
 # set $tm st -e tmux
