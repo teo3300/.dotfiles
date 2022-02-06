@@ -3,18 +3,24 @@
 #
 
 # Run sway on tty
-if [[ -z $DISPLAY && "$(tty)" == "/dev/tty1" && $XDG_SESSION_TYPE == tty ]]; then
+if [[ -z $DISPLAY && "$(tty)" == "/dev/tty1" && $XDG_SESSION_TYPE == tty ]]
+then
 
 	# set previous brightness
 	brightnessctl set $(cat "$HOME/.config/sway/backlight") > /dev/null
 
     export PATH="$HOME/.local/bin:$PATH"
-	QT_QPA_PLATFORM=wayland MOZ_ENABLE_WAYLAND=1 XDG_SESSION_TYPE=wayland exec sway # --my-next-gpu-wont-be-nvidia
-	# _JAVA_AWT_WM_NONREPARENTING=1 
+	_JAVA_AWT_WM_NONREPARENTING=1\
+		QT_QPA_PLATFORM=wayland\
+		MOZ_ENABLE_WAYLAND=1\
+		XDG_SESSION_TYPE=wayland\
+		exec sway # --my-next-gpu-wont-be-nvidia
 
 fi
 
 export XDG_CONFIG_HOME="$HOME/.config"
+export LIBVA_DRIVER_NAME="nouveau"
+export VDPAU_DRIVER="nouveau"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return

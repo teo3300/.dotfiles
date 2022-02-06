@@ -239,10 +239,16 @@ bindsym $mod+r mode "resize"
 	bindsym --release Shift+Print	exec grim -g "$(slurp)" - | wl-copy
 
 # Lock screen with swaylock
-	bindsym XF86ScreenSaver exec swaylock -e -i $wallpaper -s fill
+	bindsym XF86ScreenSaver exec swaylock\
+		--clock\
+		--timestr "%H:%M"\
+		--indicator\
+		--effect-blur 7x5\
+		--ignore-empty-password\
+		--screenshots
+#		-i $wallpaper
 
 # Read `man 5 sway-bar` for more information about this section.
-	
 
 # Status bar colors
 set $st #ffffffa0
