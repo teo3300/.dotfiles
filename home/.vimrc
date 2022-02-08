@@ -1,4 +1,4 @@
-"" General
+" General
 set number	    " Show line numbers
 set relativenumber  " Show relative line numbers on the left. These change based upon where your cursor is.
 syntax on           " Turn syntax highlighting on
@@ -29,8 +29,8 @@ set foldcolumn=1    " Place a width 1 margin on the left
 "" Advanced
 set ruler	    " Show row and column ruler information
 set colorcolumn=80,120
-"set colorcolumn=120
-highlight ColorColumn ctermbg=256 ctermfg=16
+colorscheme slate	" set reasonable color scheme
+highlight ColorColumn ctermbg=0 ctermfg=128
 
 set undolevels=1000	        " Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour
