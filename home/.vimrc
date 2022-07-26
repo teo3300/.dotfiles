@@ -18,7 +18,7 @@ set cursorline      " Highlight current cursor line
 " set cursorcolumn    " Highlight current cursor column
 set cindent         " Use 'C' style program indenting
 set noexpandtab     " Do not use spaces instesd of tabs
-"set expandtab      " Use spaces instead of tabs
+set expandtab      " Use spaces instead of tabs
 set shiftwidth=4    " Number of auto-indent spaces
 set smartindent	    " Enable smart-indent
 set smarttab	    " Enable smart-tabs
@@ -29,7 +29,7 @@ set foldcolumn=1    " Place a width 1 margin on the left
 "" Advanced
 set ruler	    " Show row and column ruler information
 set colorcolumn=80,120
-colorscheme slate	" set reasonable color scheme
+"" colorscheme slate	" set reasonable color scheme
 highlight ColorColumn ctermbg=0 ctermfg=128
 
 set undolevels=1000	        " Number of undo levels

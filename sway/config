@@ -16,7 +16,7 @@ set $right l
 
 # Your preferred terminal emulator (was sway)
 set $term foot
-set $fm urxvt -e ranger
+set $fm kitty -e ranger
 
 # set $tm st -e tmux
 # Your preferred application launcher
@@ -24,21 +24,36 @@ set $fm urxvt -e ranger
 set $menu bemenu-run --ifne Wayland #dmenu_path | dmenu | xargs swaymsg exec --
 
 ## Set bg for both desktop and screensaver
-set $wallpaper "/usr/share/backgrounds/sway/gakkougurashi.png"
+#set $wallpaper "/usr/share/backgrounds/sway/gakkougurashi.png"
+set $wallpaper "$HOME/Pictures/sfondino.png"
 
 # Set local bin folder
 set $lbin "$HOME/.local/bin"
-
-### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output "*" bg $wallpaper fill
 
 # Example configuration:
 #
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
+output HDMI-A-1 resolution 1680x1050 position 0,150
+output DVI-D-1 resolution 1280x1024 position 1680,0
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output "*" bg $wallpaper fill
+
+set $lock_par --clock\
+		--timestr "%H:%M"\
+		--indicator\
+		--effect-vignette 0.3:1\
+		-i $wallpaper\
+		--ignore-empty-password
+#		--screenshots
+#		--effect-blur 8x4
+
+# Lock screen with swaylock
+	bindsym $mod+Escape exec swaylock $lock_par
 
 ### Idle configuration
 #
@@ -46,12 +61,11 @@ output "*" bg $wallpaper fill
 #
 
 #############################################
-#exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' 
+exec swayidle -w \
+		timeout 800 "swaylock $lock_par" \
+	before-sleep 'swaylock $lock_par"
+#		 timeout 310 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
 #############################################
-#          timeout 310 'swaymsg "output * dpms off"' \
-#          resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
 
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
@@ -126,28 +140,30 @@ output "*" bg $wallpaper fill
 # Workspaces:
 #
     # Switch to workspace
-    bindsym $mod+1 workspace 1 Home|
-    bindsym $mod+2 workspace 2 Editor|
-    bindsym $mod+3 workspace 3 Terminale|
-    bindsym $mod+4 workspace 4 Browser|
-    bindsym $mod+5 workspace 5 Messaggi|
-    bindsym $mod+6 workspace 6 App|
-    bindsym $mod+7 workspace 7 App|
-    bindsym $mod+8 workspace 8|
-    bindsym $mod+9 workspace 9|
-    bindsym $mod+0 workspace 10 Processi|
+    bindsym $mod+1 workspace 1
+    bindsym $mod+2 workspace 2
+    bindsym $mod+3 workspace 3
+    bindsym $mod+4 workspace 4
+    bindsym $mod+5 workspace 5
+    bindsym $mod+6 workspace 6
+    bindsym $mod+7 workspace 7
+    bindsym $mod+8 workspace 8
+    bindsym $mod+9 workspace 9
+    bindsym $mod+0 workspace 10
+    bindsym $mod+backslash workspace Processes
 		
 		# Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace 1 Home|
-    bindsym $mod+Shift+2 move container to workspace 2 Editor|
-    bindsym $mod+Shift+3 move container to workspace 3 Terminale|
-    bindsym $mod+Shift+4 move container to workspace 4 Browser|
-    bindsym $mod+Shift+5 move container to workspace 5 Messaggi|
-    bindsym $mod+Shift+6 move container to workspace 6 App|
-    bindsym $mod+Shift+7 move container to workspace 7 App|
-    bindsym $mod+Shift+8 move container to workspace 8|
-    bindsym $mod+Shift+9 move container to workspace 9|
-    bindsym $mod+Shift+0 move container to workspace 10 Processi|
+    bindsym $mod+Shift+1 move container to workspace 1
+    bindsym $mod+Shift+2 move container to workspace 2
+    bindsym $mod+Shift+3 move container to workspace 3
+    bindsym $mod+Shift+4 move container to workspace 4
+    bindsym $mod+Shift+5 move container to workspace 5
+    bindsym $mod+Shift+6 move container to workspace 6
+    bindsym $mod+Shift+7 move container to workspace 7
+    bindsym $mod+Shift+8 move container to workspace 8
+    bindsym $mod+Shift+9 move container to workspace 9
+    bindsym $mod+Shift+0 move container to workspace 10
+    bindsym $mod+Shift+backslash move container to workspace Processes
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
@@ -171,7 +187,9 @@ output "*" bg $wallpaper fill
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+	# key used to cycle IME
+	bindsym $mod+space exec $lbin/IME_toggle
+	# bindsym $mod+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -215,9 +233,9 @@ bindsym $mod+r mode "resize"
 ###################################################################
 ################################################################
 # Controls for volume and brightness
-#	bindsym XF86AudioRaiseVolume 	exec pactl set-sink-volume @DEFAULT_SINK@ +10%
+#	bindsym XF86AudioRaiseVolume 	exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 	bindsym XF86AudioRaiseVolume    exec $lbin/volumeUpFixed
-	bindsym XF86AudioLowerVolume 	exec pactl set-sink-volume @DEFAULT_SINK@ -10%
+	bindsym XF86AudioLowerVolume 	exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 	bindsym XF86AudioMute 			exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 #	bindsym	XF86MonBrightnessDown	exec brightnessctl s 4-%
@@ -225,28 +243,20 @@ bindsym $mod+r mode "resize"
 	bindsym XF86MonBrightnessUp 	exec $lbin/brightnessUpFixed
 #	bindsym XF86PowerOff
 
-	bindsym $mod+Shift+o		exec firefox "http://server.qnss.it/aule.html"
-	bindsym $mod+Shift+a		exec firefox "http://daisydata.freeddns.org:9328"
-
-# Mute mic (no dedicated button)
-   	bindsym $mod+Shift+m   	    exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-
 # Take a screenshot of the whole screen
-	bindsym Print 			exec grim ~/Pictures/screenshot/screenshot-$(date +%F_%H%M%S_%3N).png
+	bindsym Print 					exec grim $HOME/Pictures/screenshots/screenshot-$(date +%F_%H%M%S_%3N).png
 
 # Image to clipboard
 #	bindsym	--release Shift+Print	exec import
 	bindsym --release Shift+Print	exec grim -g "$(slurp)" - | wl-copy
 
-# Lock screen with swaylock
-	bindsym XF86ScreenSaver exec swaylock\
-		--clock\
-		--timestr "%H:%M"\
-		--indicator\
-		--effect-blur 7x5\
-		--ignore-empty-password\
-		--screenshots
-#		-i $wallpaper
+# System suspension
+	bindsym $mod+Shift+s			exec systemctl suspend
+    bindsym $mod+Shift+d            exec systemctl hibernate
+
+
+# Open jisho with the default browser
+	bindsym $mod+p					exec xdg-open https://jisho.org
 
 # Read `man 5 sway-bar` for more information about this section.
 
@@ -287,6 +297,11 @@ bar {
 
 #include /etc/$name/config.d/*
 
+# setting default workspace-display association
+workspace 1 output HDMI-A-1
+workspace 2 output HDMI-A-1
+workspace 3 output DVI-D-1
+
 ##########################################################
 # Personal settings configuratons
 
@@ -298,25 +313,25 @@ input * xkb_layout "it(winkeys)"
 exec xrdb ~/.Xresources
 
 # I GAPS
-# gaps inner 16
+# gaps inner 4
 ## gaps inner 32
-# gaps outer 16
+# gaps outer 4
 ## gaps outer 128
 
 # I BORDI
 default_border pixel 2 
 
 # Change windows apparence
-set $wborder	#0f0307
-set $wbg		#0f0307
-set $wtext		#0f0307
+set $wborder	#c9b29c
+set $wbg		#c9b29c
+set $wtext		#c9b29c
 set $windicator	#353128
 
 #common value for unfocused windows
-set $wunf		#c9b29c
+set $wunf		#0f0307 
 
 # Also set in pixel metod
-set $wchborder	#0f0307
+set $wchborder	#c9b29c
 
 #						Border		Background	Text		indicator	child_border
 client.focused			$wborder	$wbg		$wtext		$windicator	$wchborder

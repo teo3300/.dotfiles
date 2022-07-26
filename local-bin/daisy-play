@@ -1,9 +1,0 @@
-#!/bin/bash
-USR="rogora"
-PLAYER=mpv
-URL="http://${USR}:"
-PORT="9329"
-echo -n "password:"
-read -s PASSWORD
-URL="${URL}$PASSWORD@daisydata.freeddns.org:$PORT/$1"
-exec $PLAYER $URL
