@@ -1,0 +1,9 @@
+#!/bin/bash
+
+minimum_brightness=4
+step=$1
+
+if [[ $(brightnessctl g) -ge $(expr $minimum_brightness + $step) ]]; then
+	brightnessctl s $step-%
+	echo $(brightnessctl g) > "$HOME/.config/sway/backlight"
+fi

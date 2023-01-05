@@ -1,0 +1,2 @@
+#!/bin/bash
+swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | if (.app_id!=null) then .app_id else .name end' | tr -d '"'

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# set XDG home
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# run qt applications under wayland
+export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+# run gtk applications under wayland
+export GTK_BACKEND=wayland
+
+# use open nvidia driver
+export LIBVA_DRIVER_NAME="nouveau"
+export VDPAU_DRIVER="nouveau"
+
+# use as default programs
+export EDITOR="emacsclient"
+export PAGER=less

@@ -1,0 +1,11 @@
+home			
+config			.config
+vscode			.config/Code\ -\ OSS/User
+local-bin		.local/bin
+sway			.config/sway
+foot			.config/foot
+kitty           .config/kitty
+firefox			.mozilla/firefox/*.default-release/chrome
+systemd_user	.config/systemd/user
+emacs.d         .emacs.d
+vid             Videos

@@ -1,0 +1,5 @@
+#!/bin/bash
+step=$1
+
+brightnessctl s +$step%
+echo $(brightnessctl g) > "$HOME/.config/sway/backlight"

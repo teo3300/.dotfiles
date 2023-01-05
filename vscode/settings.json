@@ -1,0 +1,32 @@
+{
+    "editor.detectIndentation": false,
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.rulers": [80,120],
+
+    "background.enabled": true,
+    "background.useDefault": false,
+    "background.useFront": true,
+    "background.customImages": [
+        "/usr/share/backgrounds/vscode/amiya-s_pantyhose.png"
+    ],
+    "background.loop": false,
+    "background.style": {
+        //  default amiya's pantyhose
+        "content": "''",
+        "pointer-events": "none",
+        "right":"0px",
+        "bottom": "0px",
+        "position": "absolute",
+        "height": "100%",
+        "background-repeat": "no-repeat",
+        "background-size": "auto 100%",
+        "opacity": 0.25
+    },
+    //  for other images
+    //  bottom:
+    //  width:
+    //  height:
+    //  opacity:
+    //  background-size: 100% auto; for larger images
+}

@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Remove all but last 2 cached version of packages
+When = PostTransaction
+Exec = /usr/bin/paccache -rvk2

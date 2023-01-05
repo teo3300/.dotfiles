@@ -1,0 +1,17 @@
+#!/bin/sh
+function yon {
+  while true; do
+    read -p "$*? [y/N]: " yn
+    case $yn in
+      [Yy]*) return 0  ;;  
+      *) echo "...Skipping" ; return  1 ;;
+    esac
+  done
+}
+
+yon "Check for failed services" && systemctl --failed | $PAGER
+yon "Update official packages" && sudo pacman -Syu
+yon "Update aur packages" && sudo yay -Syu
+yon "Check for orphans and dropped packages" && pacman -Qtd
+yon "Clear $(du $HOME/.cache -hs | awk '{print $1}') of local cache" && rm -rf "$HOME/.cache/*"
+yon "Display broken symlink" && sudo find / -xtype l -print | $PAGER

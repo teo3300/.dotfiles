@@ -1,0 +1,383 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Your preferred terminal emulator (was sway)
+set $term foot
+set $fm kitty -e ranger
+
+# Set default agenda file
+set $emacs_agenda "~/Documents/agenda/agenda.org"
+
+# set steps
+set $volume_step 5
+set $brightness_step 8
+
+# set lock timer
+set $lock_timer 300
+
+# set shortcut to interact with bar
+set $brightness_up $lbin/brightnessUpFixed $brightness_step
+set $brightness_down $lbin/brightnessDownFixed $brightness_step
+set $volume_up $lbin/volumeUpFixed $volume_step
+set $volume_down pactl set-sink-volume @DEFAULT_SINK@ -$volume_step%
+set $volume_mute pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# set $tm st -e tmux
+# Your preferred application launcher
+# Note: it's recommended that you pass the final command to sway
+set $menu bemenu-run --ifne Wayland #dmenu_path | dmenu | xargs swaymsg exec --
+
+## Set bg for both desktop and screensaver
+#set $wallpaper "/usr/share/backgrounds/sway/gakkougurashi.png"
+set $wallpaper "$HOME/Pictures/wallpaper"
+
+# Set local bin folder
+set $lbin "$HOME/.local/bin"
+
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output "*" bg $wallpaper fill
+
+set $lock "$HOME/.config/sway/lock.sh $wallpaper 200"
+
+# Lock screen with swaylock
+#
+
+#############################################
+exec swayidle -w \
+    timeout $lock_timer $lock\
+    timeout $(expr $lock_timer + 60) 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    before-sleep $lock
+#############################################
+
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 10 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+
+    input type:touchpad {
+        dwt enabled
+        tap enabled
+        middle_emulation enabled
+    }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term 
+    bindsym $mod+Shift+Return exec $fm
+
+
+    # Start emacsclient
+    bindsym $mod+p exec $term emacsclient -nw -c -a 'emacs -nw'
+    bindsym $mod+Shift+p exec emacsclient -c -a 'emacs'
+    # Start with agenda
+    bindsym $mod+Shift+a exec $term emacsclient -nw -c $emacs_agenda
+
+    # Kill focused window
+    bindsym $mod+Shift+q kill
+
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    #floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c exec swaymsg reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -m "ATTENZIONE: Terminare la sessione di sway?" -b 'Exit sway' 'swaymsg exit'
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+
+    bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace 1
+    bindsym $mod+2 workspace 2
+    bindsym $mod+3 workspace 3
+    bindsym $mod+4 workspace 4
+    bindsym $mod+5 workspace 5
+    bindsym $mod+6 workspace 6
+    bindsym $mod+7 workspace 7
+    bindsym $mod+8 workspace 8
+    bindsym $mod+9 workspace 9
+    bindsym $mod+0 workspace 0
+    bindsym $mod+backslash workspace Processes
+		
+		# Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace 1
+    bindsym $mod+Shift+2 move container to workspace 2
+    bindsym $mod+Shift+3 move container to workspace 3
+    bindsym $mod+Shift+4 move container to workspace 4
+    bindsym $mod+Shift+5 move container to workspace 5
+    bindsym $mod+Shift+6 move container to workspace 6
+    bindsym $mod+Shift+7 move container to workspace 7
+    bindsym $mod+Shift+8 move container to workspace 8
+    bindsym $mod+Shift+9 move container to workspace 9
+    bindsym $mod+Shift+0 move container to workspace 0
+    bindsym $mod+Shift+backslash move container to workspace Processes
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+ 	#bindsym $mod+s layout stacking # I only use tabbed or split
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+	# key used to cycle IME
+	bindsym $mod+space exec $lbin/IME_toggle
+	# bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+###################################################################
+################################################################
+# Controls for volume and brightness
+	bindsym XF86AudioRaiseVolume        exec $volume_up
+	bindsym $mod+XF86AudioRaiseVolume   exec $volume_up
+
+	bindsym XF86AudioLowerVolume 	    exec $volume_down
+	bindsym $mod+XF86AudioLowerVolume 	exec $volume_down
+
+	bindsym XF86AudioMute 			    exec $volume_mute
+	bindsym $mod+XF86AudioMute 			exec $volume_mute
+
+	bindsym XF86MonBrightnessUp 	    exec $brightness_up
+	bindsym $mod+XF86MonBrightnessUp 	exec $brightness_up
+
+	bindsym XF86MonBrightnessDown 	    exec $brightness_down
+	bindsym $mod+XF86MonBrightnessDown 	exec $brightness_down
+
+# Mute mic (no dedicated button)
+   	bindsym $mod+Shift+m   	    exec $volume_mute
+
+# Take a screenshot of the whole screen
+	bindsym Print 					exec grim $HOME/Pictures/screenshots/$($lbin/get_focused)-$(date +%F_%H%M%S_%3N).png
+
+# Image to clipboard
+#	bindsym	--release Shift+Print	exec import
+	bindsym --release Shift+Print	exec grim -g "$(slurp)" - | wl-copy
+	bindsym --release $mod+Shift+s	exec grim -g "$(slurp)" - | wl-copy
+
+# Lock screen with swaylock using dedicated button and combinations for
+# keyboards that does not support it
+	bindsym XF86LaunchA exec $lock
+    bindsym $mod+Escape exec $lock
+# lock sreen when laptop lid re open
+    bindswitch --reload --locked lid:on exec $lock
+
+# System suspension
+    bindsym $mod+Shift+d            exec systemctl suspend
+
+# Get power info
+set $battery_path $(for f in /sys/class/power_supply/BAT*; do echo $f; done)
+set $power_path $(for f in /sys/class/power_supply/ADP*; do echo $f; done)
+
+# Read `man 5 sway-bar` for more information about this section.
+
+# Status bar colors
+set $st #ffffffa0
+set $bg #46472bff
+set $tx #ffffffa0
+
+bar {
+
+    # only display swaybar whwn $mod key is pressed
+    mode dock
+    hidden_state hide
+    modifier $mod
+
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while ~/.config/sway/status.sh $battery_path $power_path; do sleep 0.4; done
+
+	# Sway-bar gaps
+	#	gaps 8
+
+    colors {
+        # text color
+		statusline $st
+
+		# background color
+		background $bg
+
+
+		# Workspace colors <border> <background> <text>
+
+		# current workspace
+		focused_workspace $tx $tx $bg
+
+		urgent_workspace $tx $bg $tx
+	    inactive_workspace $bg $bg $tx
+
+    }
+	font pango:DejaVu Sans Mono 8
+    
+    # disable changing workspace with mouse when bar is focused
+    bindsym button1 nop
+    bindsym button2 nop
+    bindsym button3 nop
+
+    # diable vertical scrolling
+    bindsym button4 nop
+    bindsym button5 nop
+    # diable horizontal scrolling
+    bindsym button6 nop
+    bindsym button7 nop
+
+}
+
+#includettetc/$name/config.d/*
+
+# setting default workspace-display association
+
+##########################################################
+# Personal settings configuratons
+
+# Set keyboard layout to italy
+# exec setxkbmap -layout it
+input * xkb_layout "it"
+
+# Load Xresources
+exec xrdb ~/.Xresources
+
+# Launch dunst
+exec dunst
+
+# I GAPS
+# gaps inner 4
+## gaps inner 32
+# gaps outer 2
+## gaps outer 128
+
+# I BORDI
+default_border pixel 2 
+
+# Change windows apparence
+set $wborder	#c9b29c
+set $wbg		#c9b29c
+set $wtext		#c9b29c
+set $windicator	#353128
+
+#common value for unfocused windows
+set $wunf		#0f0307 
+
+# Also set in pixel metod
+set $wchborder	#c9b29c
+
+#						Border		Background	Text		indicator	child_border
+client.focused			$wborder	$wbg		$wtext		$windicator	$wchborder
+client.unfocused		$wunf		$wunf		$wunf		$wunf		$wunf
+client.focused_inactive	$wunf		$wunf		$wunf		$wunf		$wunf

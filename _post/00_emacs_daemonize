@@ -1,0 +1,3 @@
+#!/bin/bash
+touch /home/rogora/.emacs.d/conprof-assoc.el
+systemctl enable --now --user emacs.service

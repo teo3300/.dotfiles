@@ -1,0 +1,26 @@
+#!/bin/bash
+
+hours=0
+minutes=0
+seconds=0
+if [[ $# > 0 ]]; then
+    seconds=$1
+fi
+if [[ $# > 1 ]]; then
+    minutes=$1
+    seconds=$2
+fi
+if [[ $# > 2 ]]; then
+    hours=$1
+    minutes=$2
+    seconds=$3
+fi
+
+# determine seconds
+time2sec () {
+    echo $(expr $seconds + $(expr $(expr $minutes \* 60) + $(expr $hours \* 3600)))
+}
+
+echo "Alarm set in $hours:$minutes:$seconds($(time2sec $1 $2 $3))" &&\
+    sleep $(time2sec $1 $2 $3) &&\
+    mpv "$HOME/Videos/alarm.m4a" --loop-file=inf &
