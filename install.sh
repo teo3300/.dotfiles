@@ -29,7 +29,7 @@ safe_diff(){
 make_link(){
     target=$1
     link=$2
-    ln $target $link ||
+    ln -f $target $link ||
         (echo "FAILED physical link, making symbolic link..." &&
         ln -s $target $link ||
             (sudo ln -s $target $link) || true)
