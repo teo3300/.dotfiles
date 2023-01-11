@@ -42,7 +42,7 @@ install_to() {
     # Attempt mkdir of the destination folder if it not exixst
     if [[ ! -d $dst_folder ]]; then
         echo "MISSING: $dst; attempting mkdir"
-        echo "mkdir -p $dst"
+        mkdir -p $dst
     fi
 
     for file in $src_folder/*; do
@@ -51,8 +51,9 @@ install_to() {
         link="$dst_folder/$(basename $file)"
         file_different=$(safe_diff $link $target)
         if [[ -n "$file_different" ]]; then
-           make_link $target $link
-           changed="X"
+            echo "Linking $target <- $link"
+            make_link $target $link
+            changed="X"
         fi
     done
 }

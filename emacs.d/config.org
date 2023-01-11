@@ -1,19 +1,18 @@
--*- eval: (display-line-numbers-mode) -*-
--*- eval: (rainbow-delimiters-mode) -*-
+# -*- eval: (display-line-numbers-mode) -*-
  # enable line counter
  # enable rainbow parentheses
-#+STARTUP: hidestars
-#+STARTUP: overview
-#+TAGS: TEMPORARY(t) BROKEN(b) DISABLED(d)
- # hide leading stars (easier to read)
- # collapse all contents
  # performs evaluation of the above line before loading config
+#+STARTUP: hidestars
+ # hide leading stars (easier to read)
+#+STARTUP: overview
+ # collapse all contents
+#+TAGS: TEMPORARY(t) BROKEN(b) DISABLED(d)
  # set tags <TAG_NAME>(<shortname>)
 
 * Package management
   Initialize the built-in package manager.
 #+begin_src emacs-lisp :tangle yes
-  (require 'package)
+  (require 'package) 
 #+end_src
 
 ** MELPA
@@ -43,6 +42,14 @@
     (require 'use-package))
 #+end_src
 
+** Local packages
+*** ob-protobuf
+
+    Adds support for tangling protobuf code
+#+begin_src emacs-lisp :tangle yes
+  (add-to-list 'load-path (expand-file-name "~/git/ob-protobuf"))
+#+end_src
+  
 * Definitions
 
 ** Autoloads
@@ -203,11 +210,18 @@
 #+begin_src emacs-lisp :tangle yes
   :after undo-tree
 #+end_src
+
+     Then set the backend for the undo functionality using the
+     function [[help:evil-set-undo-system][evil-set-undo-system]]
+#+begin_src emacs-lisp :tangle yes
+  :config
+  (evil-set-undo-system 'undo-tree)
+#+end_src
+
      In addition, the [[help:global-undo-tree-mode][global-undo-tree-mode]] is not effective inside
      non-file buffers. Therefore we need to explicitly activate it
      when the local Evil mode is activated.
 #+begin_src emacs-lisp :tangle yes
-  :config
   (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
 #+end_src
 
@@ -1299,6 +1313,13 @@ Register a debug template for Rust.
         guess-style-guess-all)
     #+end_src
 
+*** protobuf
+Provides syntax highlighting for protobuf
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package protobuf-mode :ensure t :mode (("\\.proto\\'" . protobuf-mode)))
+#+end_src
+
 ** Writing and publishing
    What follow are packages centered around writing documents. Among
    other things, here are the packages for managing bibliographies for
@@ -2009,6 +2030,10 @@ incremental search among all fields.
       #+begin_src emacs-lisp :tangle yes
           (python . t)
       #+end_src
+    - Protobuf
+      #+begin_src emacs-lisp :tangle yes
+          (protobuf . t)
+      #+end_src
     - Shell
       #+begin_src emacs-lisp :tangle yes
           (shell . t)))
@@ -2493,36 +2518,6 @@ Save minibuffer history, as simple as that.
     (savehist-mode 1)
 #+end_src
 
-
-
-* Personal conf
-  Since I stole this file I'm adding all personal config at the end of
-  it to easily find my config
-
-  
-* Packages
-Required packages
-
-** Programming support
-   Language modes
-
-*** protobuf
-Provides syntax highlighting for protobuf
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package protobuf-mode :ensure t :mode (("\\.proto\\'" . protobuf-mode)))
-#+end_src
-
-* Emacs options
-  Setting options such as paths an specific variables
-
-** Undo system
-   Properly set undo system to undo-redo
-
-   #+begin_src emacs-lisp :tangle yes
-     (setq evil-undo-system 'undo-tree)
-   #+end_src
-
 ** Agenda
 
 *** Set default agenda file
@@ -2547,3 +2542,4 @@ Provides syntax highlighting for protobuf
           ((org-agenda-overriding-header "Tasks on hold\n"))))))
       )
     #+end_src
+
