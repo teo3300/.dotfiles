@@ -42,14 +42,6 @@
     (require 'use-package))
 #+end_src
 
-** Local packages
-*** ob-protobuf
-
-    Adds support for tangling protobuf code
-#+begin_src emacs-lisp :tangle yes
-  (add-to-list 'load-path (expand-file-name "~/git/ob-protobuf"))
-#+end_src
-  
 * Definitions
 
 ** Autoloads
@@ -644,7 +636,7 @@ bounds, otherwise we overload Emacs every time we open a long-lived file.
     (add-to-list 'drag-stuff-except-modes 'org-mode))
 #+end_src
 
-*** Powerline
+** Powerline
     [[https://github.com/milkypostman/powerline][Repo]]
 
     The Vim [[https://github.com/powerline/powerline][Powerline]] status line, but for Emacs.
@@ -1314,10 +1306,17 @@ Register a debug template for Rust.
     #+end_src
 
 *** protobuf
-Provides syntax highlighting for protobuf
+Install packages to provide syntax highlighting for protobuf
 
 #+begin_src emacs-lisp :tangle yes
   (use-package protobuf-mode :ensure t :mode (("\\.proto\\'" . protobuf-mode)))
+  (use-package org-protobuf :ensure t)
+#+end_src
+
+And enable it
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'org-protobuf)
 #+end_src
 
 ** Writing and publishing
@@ -2030,9 +2029,6 @@ incremental search among all fields.
       #+begin_src emacs-lisp :tangle yes
           (python . t)
       #+end_src
-    - Protobuf
-      #+begin_src emacs-lisp :tangle yes
-          (protobuf . t)
       #+end_src
     - Shell
       #+begin_src emacs-lisp :tangle yes
@@ -2529,17 +2525,28 @@ Save minibuffer history, as simple as that.
       (setq org-agenda-files (file-expand-wildcards "~/Documents/agenda/*.org"))
     #+end_src
 
-*** Custom agenda commands                                         :DISABLED:
+*** Custom agenda commands
     Add custom commands for agenda:
     - List all wait tasks
-    #+begin_src emacs-lisp :tangle no
+
+    #+begin_src emacs-lisp :tangle yes
       (setq org-agenda-custom-commands
-        '(("n" "Agenda all TODOs"
-          ((agenda #1="")
-          (alltodo #1#)))
-         ("w" "Filter wait TODO"
-          ((todo "WAIT"
-          ((org-agenda-overriding-header "Tasks on hold\n"))))))
-      )
+      '(("w" "Waiting Tasks" tags-todo "WAIT")))
     #+end_src
 
+*** Add keybinding for agenda month view
+    Enable agenda view for the whole month instead of just the current week
+
+    #+begin_src emacs-lisp :tangle yes
+      (global-set-key (kbd "C-c a m") 'org-agenda-month-view)
+    #+end_src
+
+
+
+* Dunno where to put these
+** Protobuf tangling
+Enable protobuf tangling by specifying extension
+
+#+begin_src emacs-lisp :tangle yes
+  (add-to-list 'org-babel-tangle-lang-exts '("protobuf" . "proto"))
+#+end_src
