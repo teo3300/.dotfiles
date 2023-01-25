@@ -38,6 +38,14 @@ speaker_stat=$(pamixer --get-volume)$(if [ "$(pamixer --get-mute)" = "true" ]; t
 thermal=$(sensors -u | grep Core -A1 | grep temp | awk '{print $2}' | sed 's/\..*//')
 
 # Get input method
-input_method=$(if [ "$(pgrep wlanthy)" ]; then echo -n "日本語"; else echo -n "IT"; fi)
+input_method=$(if [ "$(pgrep wlanthy)" ]; then
+    echo -n "日本語"
+else
+        echo -n $(swaymsg -t get_inputs |
+            jq -r '.[0] |
+            select(.type == "keyboard") |
+            .xkb_active_layout_name' |
+                cut -d' ' -f1);
+fi)
 
 echo $input_method🌐 $speaker_stat $used_ram💾 $backlight$bl_ico $battery_percentage$charging $thermal🌡️ $time_date

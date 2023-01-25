@@ -346,9 +346,11 @@ bar {
 ##########################################################
 # Personal settings configuratons
 
-# Set keyboard layout to italy
-# exec setxkbmap -layout it
-input * xkb_layout "it"
+# Set keyboard layouts to cycle through
+input type:keyboard {
+    xkb_layout us,it
+    xkb_options grp:rctrl_toggle
+}
 
 # Load Xresources
 exec xrdb ~/.Xresources
