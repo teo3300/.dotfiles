@@ -277,7 +277,7 @@ bindsym $mod+r mode "resize"
     bindswitch --reload --locked lid:on exec $lock
 
 # System suspension
-    bindsym $mod+Shift+d            exec systemctl suspend
+    bindsym $mod+Shift+Escape       exec systemctl suspend
 
 # Get power info
 set $battery_path $(for f in /sys/class/power_supply/BAT*; do echo $f; done)

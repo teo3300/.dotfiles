@@ -41,11 +41,11 @@ thermal=$(sensors -u | grep Core -A1 | grep temp | awk '{print $2}' | sed 's/\..
 input_method=$(if [ "$(pgrep wlanthy)" ]; then
     echo -n "日本語"
 else
-        echo -n $(swaymsg -t get_inputs |
-            jq -r '.[0] |
+        echo -n $(swaymsg -t get_inputs -r |
+            jq '.[0] |
             select(.type == "keyboard") |
             .xkb_active_layout_name' |
-                cut -d' ' -f1);
+            tr -d '"');
 fi)
 
 echo $input_method🌐 $speaker_stat $used_ram💾 $backlight$bl_ico $battery_percentage$charging $thermal🌡️ $time_date
