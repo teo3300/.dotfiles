@@ -262,7 +262,7 @@ bindsym $mod+r mode "resize"
    	bindsym $mod+Shift+m   	    exec $volume_mute
 
 # Take a screenshot of the whole screen
-	bindsym Print 					exec grim $HOME/Pictures/screenshots/$($lbin/get_focused)-$(date +%F_%H%M%S_%3N).png
+	bindsym Print 					exec grim "$HOME/Pictures/screenshots/$($lbin/get_focused)-$(date +%F_%H%M%S_%3N).png"
 
 # Image to clipboard
 #	bindsym	--release Shift+Print	exec import
