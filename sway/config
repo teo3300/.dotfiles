@@ -34,6 +34,7 @@ set $brightness_down $lbin/brightnessDownFixed $brightness_step
 set $volume_up $lbin/volumeUpFixed $volume_step
 set $volume_down pactl set-sink-volume @DEFAULT_SINK@ -$volume_step%
 set $volume_mute pactl set-sink-mute @DEFAULT_SINK@ toggle
+set $mic_toggle pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # set $tm st -e tmux
 # Your preferred application launcher
@@ -237,6 +238,7 @@ mode "resize" {
     # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 bindsym $mod+r mode "resize"
 
@@ -259,7 +261,7 @@ bindsym $mod+r mode "resize"
 	bindsym $mod+XF86MonBrightnessDown 	exec $brightness_down
 
 # Mute mic (no dedicated button)
-   	bindsym $mod+Shift+m   	    exec $volume_mute
+   	bindsym $mod+Shift+m   	    exec $mic_toggle
 
 # Take a screenshot of the whole screen
 	bindsym Print 					exec grim "$HOME/Pictures/screenshots/$($lbin/get_focused)-$(date +%F_%H%M%S_%3N).png"
