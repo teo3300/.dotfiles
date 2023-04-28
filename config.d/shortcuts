@@ -1,0 +1,158 @@
+### Basic Key bindings
+    ### Start a terminal
+    bindsym $mod+Return exec $term
+    ### Open the file manager
+    bindsym $mod+Shift+Return exec $fm
+
+    ### Start the app launcher
+    bindsym $mod+d exec $menu
+
+    ### Kill focused window
+    bindsym $mod+Shift+q kill
+
+    ### Start emacsclient in the home folder
+    bindsym $mod+p exec $term emacsclient -nw -c -a 'emacs -nw'
+    bindsym $mod+Shift+p exec emacsclient -c -a 'emacs'
+    ### Open the default agenda
+    bindsym $mod+Shift+a exec $term emacsclient -nw -c $emacs_agenda
+
+    ### Drag floating windows by holding down $mod and left mouse button.
+    ### Resize them with right mouse button + $mod.
+    ### Despite the name, also works for non-floating windows.
+    ### Change normal to inverse to use left mouse button for resizing and right
+    ### mouse button for dragging.
+    floating_modifier $mod normal
+
+    ### Reload the configuration file
+    bindsym $mod+Shift+c exec swaymsg reload
+
+    ### Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -m "WARNING: Do you really want to quit the current Wayland session?" -b 'Exit sway' 'swaymsg exit'
+###
+### Moving around:
+###
+    ### Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    ### Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    ### Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    ### Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+
+##### Previously content in
+###     config.d/workspaces (workspaces settings)
+
+###
+### Layout stuff:
+###
+    ### You can "split" the current object of your focus with
+    ### $mod+b or $mod+v, for horizontal and vertical splits
+    ### respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    ### Switch the current container between different layout styles
+ 	# bindsym $mod+s layout stacking
+    ### I only use tabbed or split
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    ### Make the current focused window fullscreen
+    bindsym $mod+f fullscreen
+
+    ### Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    ### Swap focus between the tiling area and the floating area
+    # bindsym $mod+space focus mode_toggle # Now assigned to IME toggle
+
+	### Toggle japanese input
+	bindsym $mod+space exec $lbin/IME_toggle
+
+    ### Move focus to the parent container
+    bindsym $mod+a focus parent
+###
+### Scratchpad:
+###
+    ### Sway has a "scratchpad", which is a bag of holding for windows.
+    ### You can send windows there and get them back later.
+
+    ### Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    ### Show the next scratchpad window or hide the focused scratchpad window.
+    ### If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+###
+### Resizing containers:
+###
+mode "resize" {
+    ### left will shrink the containers width
+    ### right will grow the containers width
+    ### up will shrink the containers height
+    ### down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    ### Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    ### Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+### Enter resize mode
+bindsym $mod+r mode "resize"
+
+###
+### Custom controls
+###
+    ### Dedicated button controls
+	bindsym XF86AudioRaiseVolume        exec $volume_up
+	bindsym $mod+XF86AudioRaiseVolume   exec $volume_up
+	bindsym XF86AudioLowerVolume 	    exec $volume_down
+	bindsym $mod+XF86AudioLowerVolume 	exec $volume_down
+	bindsym XF86AudioMute 			    exec $volume_mute
+	bindsym $mod+XF86AudioMute 			exec $volume_mute
+	bindsym XF86MonBrightnessUp 	    exec $brightness_up
+	bindsym $mod+XF86MonBrightnessUp 	exec $brightness_up
+	bindsym XF86MonBrightnessDown 	    exec $brightness_down
+	bindsym $mod+XF86MonBrightnessDown 	exec $brightness_down
+
+    ### Mute mic (no dedicated button available)
+   	bindsym $mod+Shift+m                exec $mic_toggle
+
+    ### Save screenshot of the whole screen
+	bindsym Print                       exec $save_fullscren
+
+    ### Clip screen selection
+	bindsym --release Shift+Print	    exec $clip_screen_sel
+	bindsym --release $mod+Shift+s	    exec $clip_screen_sel
+
+    ### Lock screen
+	bindsym XF86LaunchA                 exec $lock
+    bindsym $mod+Escape                 exec $lock
+    bindswitch --reload --locked lid:on exec $lock
+
+    ### Suspend system
+    bindsym $mod+Shift+Escape           exec $suspend

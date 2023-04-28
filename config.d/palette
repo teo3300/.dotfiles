@@ -1,0 +1,6 @@
+###
+### Status bar colors
+###
+    set $st #a0a0a0a0
+    set $bg #000000d0
+    set $tx #a0a0a0e0

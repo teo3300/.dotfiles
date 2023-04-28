@@ -1,0 +1,2 @@
+### Export variables
+    exec export MOZ_ENABLE_WAYLAND=1

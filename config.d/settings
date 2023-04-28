@@ -1,0 +1,16 @@
+### Handy variables
+
+### Volume and brightness steps
+    set $volume_step 5
+    set $brightness_step 8
+
+### Swaylock timeout
+    set $lock_timer 300
+    set $black_screen_timer 60
+
+### Wallpaper
+    set $wallpaper "$HOME/Pictures/.wallpaper"
+    set $lock_bg "$HOME/Pictures/.screensaver"
+
+### Set a defalut file for the quick open of the org-agenda
+    set $emacs_agenda "~/Documents/agenda/agenda.org"

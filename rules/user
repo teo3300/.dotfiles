@@ -3,6 +3,7 @@ config			.config
 vscode			.config/Code\ -\ OSS/User
 local-bin		.local/bin
 sway			.config/sway
+sway-conf       .config/sway/config.d
 foot			.config/foot
 kitty           .config/kitty
 firefox			.mozilla/firefox/*.default-release/chrome

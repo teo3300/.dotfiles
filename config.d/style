@@ -1,0 +1,23 @@
+### Inner and outer gaps
+    # gaps inner 4
+    # gaps outer 2
+
+### Window border
+    default_border pixel 2 
+
+### Change windows apparence
+    set $wborder	#c9b29c
+    set $wbg		#c9b29c
+    set $wtext		#353128
+    set $windicator	#353128
+
+### common value for unfocused windows
+    set $wunf		#0f0307 
+
+### Also set in pixel metod
+    set $wchborder	#c9b29c
+
+#						Border		Background	Text		indicator	child_border
+client.focused			$wborder	$wbg		$wtext		$wborder	$wchborder
+client.unfocused		$wunf		$wunf		$wunf		$wunf		$wunf
+client.focused_inactive	$wunf		$wunf		$wunf		$wunf		$wunf

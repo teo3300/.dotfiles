@@ -1,0 +1,25 @@
+###
+### Set commands for keybinding
+###
+    ### Add ~/.local/bin folder to the path
+    set $lbin               "$HOME/.local/bin"
+
+    ### Adjust brightness
+    set $brightness_up      $lbin/brightnessUpFixed $brightness_step
+    set $brightness_down    $lbin/brightnessDownFixed $brightness_step
+
+    ### Adjust volume and mic mute
+    set $volume_up          $lbin/volumeUpFixed $volume_step
+    set $volume_down        pactl set-sink-volume @DEFAULT_SINK@ -$volume_step%
+    set $volume_mute        pactl set-sink-mute @DEFAULT_SINK@ toggle
+    set $mic_toggle         pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+    ### Screenshots
+    set $save_fullscren     grim "$HOME/Pictures/Screenshots/$($lbin/get_focused)-$(date +%F_%H%M%S_%3N).png"
+    set $clip_screen_sel    grim -g "$(slurp)" - | wl-copy
+
+    ### Lock scree
+    set $lock               "$HOME/.config/sway/lock.sh $lock_bg 200"
+
+    ### Suspend system
+    set $suspend            systemctl suspend
